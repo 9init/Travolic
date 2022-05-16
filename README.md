@@ -26,7 +26,6 @@ concepts.
     | Arrival       | arrival       |
     | Country       | country       |
     | Currency      | currency      |
-    | Country       | country       |
     | Adults        | adults        |
     | Children      | children      |
     | Infants       | infants       |

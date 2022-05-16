@@ -30,6 +30,7 @@ interface iThirdPartySearch{
     children: number
     infants: number
     language: string
+    visitorId: string
 }
 
 type SearchObj = Document<unknown, any, iSearch> & iSearch
@@ -48,7 +49,7 @@ class ThirdPartySearch implements iThirdPartySearch{
     children: number
     infants: number
     language: string
-
+    visitorId: string
       
     constructor(searchSchema: SearchObj){
         // every single element in searchSchema can't be null
@@ -60,6 +61,7 @@ class ThirdPartySearch implements iThirdPartySearch{
         this.currency = searchSchema.currency
         this.legs = ThirdPartySearch.getLegs(searchSchema)
         this.language = "en"
+        this.visitorId = searchSchema.visitorId
         this.passengers = [
             this.adults = searchSchema.adults, 
             this.children = searchSchema.children, 
@@ -80,7 +82,7 @@ class ThirdPartySearch implements iThirdPartySearch{
             departure: searchSchema.arrival,
             orig_city: true,
             dest_city: false
-        } as iLeg
+        }
 
         let leg2: iLeg = {
             origin: searchSchema.to,
@@ -88,7 +90,7 @@ class ThirdPartySearch implements iThirdPartySearch{
             departure: searchSchema.departure,
             orig_city: false,
             dest_city: true
-        } as iLeg
+        }
 
         switch(searchSchema.tripType as unknown as string){ // the type of interface is number but we receive a string value because of the getter we set in the mongoose validator
             case "oneway": { legs.push(leg1); break }

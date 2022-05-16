@@ -25,5 +25,6 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     res.status(500)
     res.render('error', { error: err })
 })
+
 // Start listening
 app.listen(PORT, HOST, ()=> console.log(`listening on ${PORT}`))
