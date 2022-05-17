@@ -1,5 +1,4 @@
 ## Introduction
-
 Flight systems are very complicated nowadays, and for sure they are
 very important.
 To build API for these systems you must understand some general
@@ -12,7 +11,6 @@ concepts.
 - `Segment`: it’s the stop-points. When you travel from point to point, the plane might first land on an external point so it get some fuels or even to change the plane. For example: Cairo - Athena - Paris. This is a flight from Cairo to Paris but the plane will first land on Athena airport and the passengers will change the plane.
 
 ## Gateway
-
 An API that takes an input data and returnes the top 5 cheapest flight tickets:
 - `POST`: xxx.domin.xxx/search
 - `GET`: not provided
@@ -20,7 +18,6 @@ An API that takes an input data and returnes the top 5 cheapest flight tickets:
 ## Json Acceptance Criteria
 
 ### Search
-
 Each URL request should have the following options:
 - `from`: Origin airport like CAI *three letters (required)*.
 - `to`: Destination airport like LHR *three letters (required)*.
@@ -68,9 +65,12 @@ Each completed response should have the following options:
             - `arrival`
             - `duration`
 
-## Setup
+## Issues
+- `The server hangs`: The server may take up to 30s waiting the completed flag from the end-point.
+    - `Possible solution`: Request an id to track the request intermittently.
 
+## Setup
 We use npm package manager
-- Install node dependencies  `$ npm install`
+- Install node dependencies `$ npm install`
 - Edit **.env** file to fit your workplace.
-- Run the system  `$ npm start`, you will see a output telling you that the server is running.
+- Run the system `$ npm start`, you will see a output telling you that the server is running.
