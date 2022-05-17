@@ -1,4 +1,4 @@
-import {Schema, Model, model} from "mongoose"
+import {Schema, Model, model, Mixed} from "mongoose"
 import {v4 as uuid} from "uuid"
 
 // Search params schema
@@ -11,8 +11,8 @@ interface iSearch{
     arrival: string
     country: string
     currency: string
-    tripType: number
-    cabinClass: number
+    tripType: Schema.Types.Mixed
+    cabinClass: Schema.Types.Mixed
     adults: number
     children: number
     infants: number
@@ -27,8 +27,8 @@ const SearchSchema = new Schema<iSearch>({
     arrival: {type: String, required: true, validate: {validator: (v: string)=> /\d{4}-\d{2}-\d{2}/.test(v)}},
     country: {type: String, set: (v: string)=>v.toUpperCase(), required: true, validate: {validator: (v: string)=> /[A-Za-z]{2}/.test(v)}},
     currency: {type: String, set: (v: string)=>v.toUpperCase(), required: true, validate: {validator: (v: string)=> /[A-Za-z]{2}/.test(v)}},
-    tripType: {type: Number, required: true, enum: [1, 2], get: (v: number)=>["oneway", "round"][v-1]},
-    cabinClass: {type: Number, required: true, enum: [1, 2, 3], get: (v: number)=>["Economy", "Business", "First"][v-1]},
+    tripType: {type: Schema.Types.Mixed, required: true, enum: [1, 2], get: (v: number)=>["oneway", "round"][v-1]},
+    cabinClass: {type: Schema.Types.Mixed, required: true, enum: [1, 2, 3], get: (v: number)=>["Economy", "Business", "First"][v-1]},
     adults: {type: Number, required: true},
     children: {type: Number, required: true},
     infants: {type: Number, required: true},

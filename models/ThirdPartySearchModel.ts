@@ -36,8 +36,8 @@ interface iThirdPartySearch{
 type SearchObj = Document<unknown, any, iSearch> & iSearch
 
 class ThirdPartySearch implements iThirdPartySearch{
-    tripType: string | number
-    cabinClass: string | number
+    tripType: string
+    cabinClass: string
     passengers: number[]
     directFlight: boolean = false
     nearbyAirportOne: boolean = false
@@ -55,8 +55,8 @@ class ThirdPartySearch implements iThirdPartySearch{
         // every single element in searchSchema can't be null
         // simply because it can't be injected here without being verified
 
-        this.tripType = searchSchema.tripType
-        this.cabinClass = searchSchema.cabinClass
+        this.tripType = searchSchema.tripType as unknown as string
+        this.cabinClass = searchSchema.cabinClass as unknown as string
         this.country = searchSchema.country
         this.currency = searchSchema.currency
         this.legs = ThirdPartySearch.getLegs(searchSchema)

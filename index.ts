@@ -27,4 +27,4 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 })
 
 // Start listening
-app.listen(PORT, HOST, ()=> console.log(`listening on ${PORT}`))
+app.listen(PORT, "0.0.0.0", ()=> console.log(`listening on ${PORT}`))
