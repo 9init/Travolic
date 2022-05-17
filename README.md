@@ -74,3 +74,6 @@ We use npm package manager
 - Install node dependencies `$ npm install`
 - Edit **.env** file to fit your workplace.
 - Run the system `$ npm start`, you will see a output telling you that the server is running.
+
+### Docker
+Tested on `node:16`, `node:17`, `node:18`
