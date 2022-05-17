@@ -1,4 +1,4 @@
-# Backend Assessment
+## Introduction
 
 Flight systems are very complicated nowadays, and for sure they are
 very important.
@@ -11,59 +11,66 @@ concepts.
 - `Leg`: it’s the path of the flight, so if your are going on a one way trip from Cairo to Paris then you have one leg which is Cairo - Paris. But if you are going to a round trip, then you will have two legs, the first is Cairo - Paris and the second is Paris - Cairo.
 - `Segment`: it’s the stop-points. When you travel from point to point, the plane might first land on an external point so it get some fuels or even to change the plane. For example: Cairo - Athena - Paris. This is a flight from Cairo to Paris but the plane will first land on Athena airport and the passengers will change the plane.
 
-## Issues
-- The parameters provided here are mixed between `Camel Case` and `Pascal Case` as showed in this image.
+## Gateway
 
-    ![](./md-assets/params.png)
+An API that takes an input data and returnes the top 5 cheapest flight tickets:
+- `POST`: xxx.domin.xxx/search
+- `GET`: not provided
 
-    According to standards we should use `Camel Case`, and here is the changes:
+## Json Acceptance Criteria
 
-    | Before        | After         |
-    | ------------- |:-------------:|
-    | From          | from          |
-    | To            | to            |
-    | Departure     | departure     |
-    | Arrival       | arrival       |
-    | Country       | country       |
-    | Currency      | currency      |
-    | Adults        | adults        |
-    | Children      | children      |
-    | Infants       | infants       |
+### Search
 
-- The end-point `api.travolic.com/search?id` [GET] is broken.
-    - with `http` protocol hangs doesn't and send a response.
-        - I supposed it will send the 5 cheapest ticket as mentioned in the PDF so no need to handle it in the code.
-    - with `https` protocol send authentication error.
-    ![](./md-assets/https-get.png)![](./md-assets/http-get1.png)![](./md-assets/http-get2.png)
+Each URL request should have the following options:
+- `from`: Origin airport like CAI *three letters (required)*.
+- `to`: Destination airport like LHR *three letters (required)*.
+- `tripType` Trip type *(required)*:
+    - `1` => oneway.
+    - `2` => round.
+- `departure`: Departure date (YYYY-MM-DD) *(required)*.
+- `arrival`: Arrival date (YYYY-MM-DD), when `tripType` is:
+    - `1` => the parameter is *(optional)*.
+    - `2` => the parameter is *(required)*.
+- `cabinClass` Flight cabine class *(required)*.
+    - `1` => Economy
+    - `2` => Business
+    - `3` => First
+- `country`: User country code *two letters (required)*.
+- `currency`: User country currency *three letters (required)*.
+- `adults` Number of adults *(required)*.
+- `children`: Number of children *(required)*.
+- `infants`: Number of infants *(required)*.
+- `visitorId`: A UUIDv4 string E.g `fabeff1a-adfa-40e2-b77d-db2038036dc2` *(optional)*.
 
-## Hierarchy
-- home
-- models
-- service
-- routes
+## Json Response Criteria
 
-### Home
- A root directory which contains
-- `index.ts`: the main node app (TypeScript).
-- `tsconfig.json`: configuration for TypeScript compiler.
-- `nodemon.json`: configuration for nodemon to run TypeScript with a help of packages included in `package.json`.
-- `.env`: just an environment file.
+### Response
 
-### Models
-A folder where schemas are defined there with theirs validators.
-I use mongoose to make the validator and schema because it easy and powerful.
-- `SearchModel.ts`: contains a schema that the server will receive.
-- `ThirdPartySearchModel.ts`: contains a schema that the server will send it to the Travolic end-point.
-
-### Routes
-A Folder where the url nad routers are handled
-
-### Service
-Here we handle the internal and external services, in our case I Handled the **Travolic End-Point** only
+Each completed response should have the following options:
+- `tickets[]`: list of the following object:
+    - `origin`: Origin airport like CAI *(three letters)*.
+    - `destination`: Destination airport like LHR *(three letters)*.
+    - `price`: Ticket price.
+    - `currency`: Currency code *(three letters)*
+    - `deepLink`: Base64 string contains the provider's data
+    - `legs[]`: List of the following object:
+        - `id`
+        - `origin`
+        - `destination`
+        - `departure`
+        - `arrival`
+        - `duration`
+        - `segments[]`: List of the following object:
+            - `id`
+            - `origin`
+            - `destination`
+            - `departure`
+            - `arrival`
+            - `duration`
 
 ## Setup
 
 We use npm package manager
 - Install node dependencies  `$ npm install`
 - Edit **.env** file to fit your workplace.
-- Run the system  `$ npm start`
+- Run the system  `$ npm start`, you will see a output telling you that the server is running.
